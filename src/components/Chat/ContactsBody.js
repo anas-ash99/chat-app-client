@@ -9,7 +9,7 @@ import useFetch from '../../UseFetch';
 
 export default function ContactsBody(props) {
 
-  const {data, laoding} = useFetch("/getChat/user1/user3")
+  
     let navigate = useNavigate()
     const allUsers = useContext(UsersContext)
     const [contacts, setContacts] = useState([])
@@ -23,7 +23,10 @@ export default function ContactsBody(props) {
     const logedinUser = props.logedinUser
     const contact = props.contact
     const handleClick = props.ifClicked
-    
+     
+   
+    // const {data, laoding} = useFetch(`/getContacts/${logedinUser}`)
+
     useEffect(()=>{ 
       axiosInstance.get(`/getContacts/${logedinUser}`).then(resp => {
           setContacts(resp.data);

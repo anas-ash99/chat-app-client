@@ -20,10 +20,10 @@ export default function ChatBtween2Users(props) {
   
   const username = useParams()
   const [user1Message , setUser1Message] = useState("")
-  const [user2Message , setUser2Message] = useState("")
   const [chat , setChat] = useState([])
   const [msgId , setMsgId] = useState("")
   const [inputValue , setInputValue] = useState("")
+  const [clickedToSendMsg , setClickedtoSendmsg] = useState(false)
   const [messagesCount, setMessagesCount] = useState()
   const classesForMain = ["justify-content-end", "msg_cotainer_send", 'deleteContainer1', "action_menu_delete", "msg_time_send", 'arrow-down1']
   const classesForOther = ["justify-content-start", "msg_cotainer", 'deleteContainer', "action_menu_delete_otherUser", "msg_time", 'arrow-down']
@@ -50,12 +50,12 @@ export default function ChatBtween2Users(props) {
     }
    }
 
-//   useEffect(()=>{
-    
-//     // getChat() 
-//     fetchMessageCount()
-//  });
- 
+  
+
+   useEffect(()=>{
+    getChat()
+     fetchMessageCount()
+ }, [props.userClickedOn, inputValue, ])
 
  
    const saveInput = (event)=>{
@@ -66,6 +66,13 @@ export default function ChatBtween2Users(props) {
    }
   
   const handleClick = ()=>{
+    if(clickedToSendMsg === true){
+      setClickedtoSendmsg(false)
+    }else{
+      setClickedtoSendmsg(true)
+    }
+    getChat()
+   console.log(clickedToSendMsg);
     var today = new Date()
     var time = today.getHours() + ":" + today.getMinutes() 
     for( i = 0; i < 10; i++){
@@ -84,7 +91,6 @@ export default function ChatBtween2Users(props) {
         time: time
       }
       )
-    console.log(msgId);
     setInputValue("")
     setMsgId("")
     ran3 = []
@@ -93,8 +99,8 @@ export default function ChatBtween2Users(props) {
   }
 
   const deleteMessage = (messageId)=>{
-    console.log(props.logedinUser);
-    console.log(props.userClickedOn);
+    getChat()
+    fetchMessageCount()
     axiosInstance.delete(`/deleteMessage/${props.logedinUser}/${props.userClickedOn}/${messageId}`)
   }
   
@@ -104,16 +110,16 @@ export default function ChatBtween2Users(props) {
 
   function messagesSturcture(){
     return(
-       data.map((ele, index)=>{
+       chat.map((ele, index)=>{
         if(ele.username === logedinUser){
           return(
               <Message key={ele.msgId} id={ele.msgId} profilePic={props.mainPic} test={"main"} classes={classesForMain}
-               time={ele.time} content={ele.content} handleDelete={deleteMessage} name ={logedinUser} user2={props.userClickedOn}/>
+               time={ele.time} content={ele.content} handleDelete={deleteMessage} name ={logedinUser} user2={props.userClickedOn} clickToSendMsg={clickedToSendMsg} />
                 )
         }else{
           return(
               <Message key={ele.msgId} id={ele.msgId} profilePic={props.user2Pic} test={"other"} classes={classesForOther} 
-              time={ele.time} content={ele.content} handleDelete={deleteMessage} name ={props.userClickedOn} user2={logedinUser}/>
+              time={ele.time} content={ele.content} handleDelete={deleteMessage} name ={props.userClickedOn} user2={logedinUser} clickToSendMsg={clickedToSendMsg}/>
           )
         }
         
@@ -130,8 +136,8 @@ export default function ChatBtween2Users(props) {
           <div className="card ">
             <CardHeader mesgCount={messagesCount} user2Pic={props.user2Pic} name={props.userClickedOn} />
             <div className="card-body msg_card_body">
-    
-              {messagesSturcture()}
+
+                  {messagesSturcture()}  
                 
             </div>
              <form onSubmit={handleSubmit} >

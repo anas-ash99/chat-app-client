@@ -6,6 +6,7 @@ export default function Login() {
    
    const allUsers = useContext(UsersContext)
    const [alert, setAlert] = useState(false)
+   const [alertUsername, setAlertUsername] = useState(false)
    const [user , setUser] = useState({username: "", password: ""})
    const [isAuthenticated, setIsAuthenticated] = useState("")
    let navigate = useNavigate()
@@ -43,18 +44,14 @@ function handleClick(e){
       navigate(`/chatAfterLogin/${user.username}`)
     }else{
       setAlert(true)
-      setTimeout(()=>setAlert(false), 3000)
+      setTimeout(()=>setAlert(false), 2500)
     }
+  }else{
+    setAlertUsername(true)
+    setTimeout(()=>setAlertUsername(false), 2500)
   }
  })
 
-
-  
-  // if(isAuthenticated ==="yes"){
-  //   navigate(`/chatfterLogin/${user.username}`)
-  // }else{
-  //   console.log("its not");
-  // }
 }
 
 
@@ -79,11 +76,17 @@ function handleSubmit(e){
                                 <span  className="closebtn"></span>
                                 Wrong Password
                             </div>}
+
+      {alertUsername && <div className="alert" style={{backgroundColor: "red"}}>
+          <span  className="closebtn"></span>
+          Username doesn't exsit 
+      </div>}
+
       <div className="form-inner">
         <form onSubmit={handleSubmit} >
           <div className="field">
           
-            <input onChange={handleChange}  value={user.username} type="text" name="username" placeholder="Email Address" />
+            <input onChange={handleChange}  value={user.username} type="text" name="username" placeholder="Username" />
           </div>
           <div className="field">
             <input onChange={handleChange} value={user.password} type="password" name="password" placeholder="Password"/>

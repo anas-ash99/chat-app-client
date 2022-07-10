@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import axios from 'axios'
 import { axiosInstance } from './config'
 
-const useFetch = (url)=>{
+const useFetch = (url, info1, info2, info3)=>{
     const [data, setData] = useState([])
     const [laoding, setlaoding] = useState(false)
     
@@ -19,7 +19,7 @@ const useFetch = (url)=>{
          setlaoding(false)
       }
      fetchData();
-   }, [url])
+   }, [url, info1, info2, info3])
    return {data, laoding}
 }
 

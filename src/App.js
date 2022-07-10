@@ -17,7 +17,7 @@ function App() {
          <UsersProvider>
          <Routes><Route path="/login" element={<Login />}/> </Routes>
          <Routes><Route path="/signup" element={<SignUp />}/> </Routes>
-         <Routes><Route path="/" element={<Home />}/> </Routes>
+         <Routes><Route path="/" element={<Login />}/> </Routes>
          <Routes><Route path="/profile/:username" element={<Profile/>}/> </Routes>
          <Routes><Route path="chat/:logedinUser/:otherUser" element={<Chat/>}   ></Route></Routes>
          <Routes><Route path="/chatAfterLogin/:logedinUser" element={<ChatfterLogin/>}/> </Routes>
