@@ -19,7 +19,7 @@ const useFetch = (url)=>{
          setlaoding(false)
       }
      fetchData();
-   })
+   }, [url])
    return {data, laoding}
 }
 

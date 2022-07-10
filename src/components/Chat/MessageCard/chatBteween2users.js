@@ -92,9 +92,6 @@ export default function ChatBtween2Users(props) {
     
   }
 
-  
-
-
   const deleteMessage = (messageId)=>{
     console.log(props.logedinUser);
     console.log(props.userClickedOn);
