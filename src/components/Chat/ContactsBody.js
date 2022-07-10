@@ -1,6 +1,6 @@
 import React,{useState, useEffect, useContext} from 'react'
 import Contacts from './Contacts'
-import axios from 'axios'
+import { axiosInstance } from '../../config';
 import AddContacts from './addContacts'
 import { FiXCircle} from "react-icons/fi";
 import { UsersContext } from '../../UsersContext'
@@ -25,7 +25,7 @@ export default function ContactsBody(props) {
     const handleClick = props.ifClicked
     
     useEffect(()=>{ 
-      axios.get(`/getContacts/${logedinUser}`).then(resp => {
+      axiosInstance.get(`/getContacts/${logedinUser}`).then(resp => {
           setContacts(resp.data);
       })  
     })

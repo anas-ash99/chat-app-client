@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import {emptyProfile} from "../url"
 import {FaAngleDown, FaTrashAlt, FaEdit, FaTelegramPlane} from "react-icons/fa"
-import axios from 'axios'
-
+import { axiosInstance } from '../../../config'
 
 export default function Message(props) {
 
@@ -45,7 +44,7 @@ export default function Message(props) {
   const handleSubmitForEdit = (e)=>{
      e.preventDefault() 
      setClickedForEdit(false)
-     axios.patch(`/editMessage/${props.id}`, {
+     axiosInstance.patch(`/editMessage/${props.id}`, {
       user1: props.name,
       user2: props.user2,
       messageId: props.id,

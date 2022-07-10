@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react'
 import {useNavigate} from "react-router-dom"
 import axios from 'axios';
 import { UsersContext } from '../UsersContext';
-
+import {axiosInstance} from '../config';
 export default function SignUp(props) {
 
   const allUsers = useContext(UsersContext)
@@ -51,7 +51,7 @@ export default function SignUp(props) {
             setAlertForPsw(true)
             setTimeout(()=> setAlertForPsw(false), 3000)
           }else{
-            axios.post("/createUser", {
+            axiosInstance.post("/createUser", {
               username: user.username,
               email: user.email,
               profilePic: "",

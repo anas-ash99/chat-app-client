@@ -1,23 +1,21 @@
 import React from 'react'
-import {url1, url2, emptyProfile} from "./url"
+import {emptyProfile} from "./url"
 import { useState, useEffect } from 'react'
 import { FaUserPlus } from "react-icons/fa";
-import axios from 'axios'
+import { axiosInstance } from '../../config';
 
 export default function AddContacts(props) {
-const [contacts, setContact] = useState(["anas", "ali"])
-const [afterAdd, setAfterAdd]  = useState(false)
 
 
 const handeleClick = () =>{
    
-  axios.post("/addFriend", 
+  axiosInstance.post("/addFriend", 
    {
     user1: props.username,
     user2: props.userToAdd
    })
 
-   axios.post("/createChat", 
+   axiosInstance.post("/createChat", 
    {
     user1: props.username,
     user2: props.userToAdd

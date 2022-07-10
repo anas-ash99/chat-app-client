@@ -1,5 +1,5 @@
 import React, {useEffect, useState, createContext} from 'react'
-import useFetch from './UseFetch'
+import {axiosInstance } from './config'
 export const UsersContext = createContext()
 
 export function UsersProvider(props) {
@@ -9,12 +9,10 @@ export function UsersProvider(props) {
   
 
   useEffect(()=>{
-    fetch("/allUsers").then(res => {
-      if(res.ok){
-        return res.json()
-      }
-    }).then(jsonRes => setAllUsers(jsonRes))
-
+    axiosInstance.get("/allUsers").then(res =>{
+      setAllUsers(res.data)
+    })
+  
     // fetch(`/getChat/${props.logedinUser}/${props.userClickedOn}`).then(res => {
     //   if(res.ok){
     //     return res.json()

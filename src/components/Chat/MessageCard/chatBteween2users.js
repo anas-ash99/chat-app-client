@@ -6,7 +6,7 @@ import ContactsBody from '../ContactsBody'
 import Message from './Message'
 import MessageMainUser from './MessageMainUser'
 import MessageBottom from './MessageBottom'
-import axios from 'axios'
+import { axiosInstance } from '../../../config'
 import useFetch from '../../../UseFetch'
 
 
@@ -33,7 +33,7 @@ export default function ChatBtween2Users(props) {
 
   async function getChat(){
     try {
-       await axios.get(`/getChat/${props.logedinUser}/${props.userClickedOn}`).then(resp => {
+       await axiosInstance.get(`/getChat/${props.logedinUser}/${props.userClickedOn}`).then(resp => {
                 setChat(resp.data);
             });
     } catch (error) {
@@ -43,7 +43,7 @@ export default function ChatBtween2Users(props) {
 
   async function fetchMessageCount(){
     try {
-      const res = await axios.get(`/messagesCount/${props.logedinUser}/${props.userClickedOn}`)
+      const res = await axiosInstance.get(`/messagesCount/${props.logedinUser}/${props.userClickedOn}`)
       setMessagesCount(res.data)
     } catch (error) {
       console.log(error);
@@ -75,7 +75,7 @@ export default function ChatBtween2Users(props) {
     
       setMsgId(ran3.join(""))
 
-      axios.post("/addMessage",
+      axiosInstance.post("/addMessage",
       {
         id: ran3.join(""),
         user1: logedinUser,
@@ -98,7 +98,7 @@ export default function ChatBtween2Users(props) {
   const deleteMessage = (messageId)=>{
     console.log(props.logedinUser);
     console.log(props.userClickedOn);
-    axios.delete(`/deleteMessage/${props.logedinUser}/${props.userClickedOn}/${messageId}`)
+    axiosInstance.delete(`/deleteMessage/${props.logedinUser}/${props.userClickedOn}/${messageId}`)
   }
   
   const handleSubmit = (e)=>{

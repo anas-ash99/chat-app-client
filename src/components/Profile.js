@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios';
+import {axiosInstance} from '../config';
 import { FaEdit, FaCheck, FaCamera, FaLocationArrow} from "react-icons/fa"
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { emptyProfile } from './Chat/url'
@@ -57,14 +57,14 @@ export default function Profile(props) {
         setClickedUsername(false)
     }
     function saveEditEmail(){
-        axios.patch("/editEmail", {
+        axiosInstance.patch("/editEmail", {
             username: props.userInfo.username,
             email: editvalue.email
         })
         setClickedEmail(false)
     }
     function saveEditNumber(){
-        axios.patch("/editPhoneNumber", {
+        axiosInstance.patch("/editPhoneNumber", {
             username: props.userInfo.username,
             phoneNum: editvalue.number
         })
@@ -77,7 +77,7 @@ export default function Profile(props) {
     }
 
     function postNewImg(){
-        axios.patch("/editProfilePic", {
+        axiosInstance.patch("/editProfilePic", {
             username: props.userInfo.username,
             picUrl: newImg
         })
