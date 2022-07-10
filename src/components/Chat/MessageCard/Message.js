@@ -76,7 +76,11 @@ export default function Message(props) {
   }
 
   const deleteClick = ()=>{
-    
+    if(clicked=== false){
+      setCklicked(true)
+    }else{
+      setCklicked(false)
+    }
     props.handleDelete(props.id)
     
   }
