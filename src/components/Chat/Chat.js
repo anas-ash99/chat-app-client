@@ -1,6 +1,6 @@
 import React, {createContext, useState, useEffect, useContext } from 'react'
-import Navbar from './Navbar'
 import ContactsBody from './ContactsBody'
+import Navbar from './Navbar'
 import { useParams } from 'react-router-dom'
 import CardAfterLogin from './MessageCard/CardAfterLogin'
 import ChatBtween2Users from './MessageCard/chatBteween2users'
@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom'
 
 export default function ChatfterLogin() {
   let navigate = useNavigate()
+  const {otherUser }= useParams()
   const allUsers = useContext(UsersContext)
   const {logedinUser} = useParams()
   const [clickedOnUser, setClickedOnUser] = useState(false)
@@ -34,15 +35,15 @@ export default function ChatfterLogin() {
       if(item.username === logedinUser){
           picUrl = item.profilePic
       }
-      if(item.username === contactName){
+      if(item.username === otherUser){
         user2Pic = item.profilePic
       }
       users.push(item.username)
   })
 
   const handleClick = (contactName)=>{
-     navigate(`/chat/${logedinUser}/${contactName}`)
-    //  setClickedOnUser(true)
+    navigate(`/chat/${logedinUser}/${contactName}`)
+     setClickedOnUser(true)
      setContactName(contactName)
   }
   
@@ -76,13 +77,12 @@ export default function ChatfterLogin() {
           
 
 
-          {clickedOnProfile? <Profile img={picUrl} goBackChat={goBack} userInfo={userInfo}/>:
+        {clickedOnProfile? <Profile img={picUrl} goBackChat={goBack} userInfo={userInfo}/>:
           <div className="row justify-content-center h-100"> <ContactsBody allUsers={allUsers} users={users} logedinUser={logedinUser} ifClicked={handleClick} />
-           <div className="col-md-8 col-sm-8 col-xl-6 chat">
-           {clickedOnUser? <ChatBtween2Users mainPic={picUrl} user2Pic={user2Pic} userClickedOn={contactName}  logedinUser={logedinUser}/>:
-           <CardAfterLogin logedinUser={logedinUser}/>}
-
-         </div></div>}
+            <div className="col-md-8 col-sm-8 col-xl-6 chat">
+              <ChatBtween2Users clickedOnUser={clickedOnUser} mainPic={picUrl} user2Pic={user2Pic} userClickedOn={otherUser}  logedinUser={logedinUser}/>
+            </div>
+        </div>}
 
        
      </div>

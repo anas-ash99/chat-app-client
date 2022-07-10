@@ -2,11 +2,11 @@ import React from 'react'
 import {FaAngleDown, FaTrashAlt, FaEdit} from "react-icons/fa"
 import { useState, useContext } from 'react'
 import {url1, url2, emptyProfile } from "../url"
-import { ProfilePicContext } from '../ChatfterLogin'
+// import { ProfilePicContext } from '../ChatfterLogin'
 
 
 export default function MessageMainUser(props) {
-  const value1 = useContext(ProfilePicContext)
+  // const value1 = useContext(ProfilePicContext)
   const [hovered, setHoverd] = useState(false)
   const [clicked, setCklicked] = useState(false)
 
@@ -25,7 +25,6 @@ export default function MessageMainUser(props) {
     }
   }
   const deleteClick = ()=>{
-    console.log(value1);
     // props.handleDelete(props.id)
   }
 

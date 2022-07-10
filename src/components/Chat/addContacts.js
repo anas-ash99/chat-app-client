@@ -28,8 +28,8 @@ const handeleClick = () =>{
   return (
     
     
-    <div>
-    <ui className="contacts"/>
+    <>
+    <ui className="contacts">
             <li className="active">
                 <div className="d-flex bd-highlight">
                     <div className="img_cont">
@@ -42,8 +42,8 @@ const handeleClick = () =>{
                 </div>
                 
             </li>
-            
-            </div>
+      </ui>
+            </>
     
      
     

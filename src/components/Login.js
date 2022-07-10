@@ -11,15 +11,6 @@ export default function Login() {
    let navigate = useNavigate()
 
 
-//   useEffect(()=>{
-//     fetch("/users").then(res => {
-//       if(res.ok){
-//         return res.json()
-//       }
-//     }).then(jsonRes => setUsers(jsonRes))
-//   console.log(users); 
-//  });
-
 function handleChange(event){
   const name = event.target.name
   const value = event.target.value

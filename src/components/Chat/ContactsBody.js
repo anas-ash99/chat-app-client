@@ -105,14 +105,14 @@ export default function ContactsBody(props) {
                   </div>
               </div>
           </div>
-              
+          <div class="card-body contacts_body">
           {clickedForAdd && <div onclick={closeAlert} style={{backgroundColor: "green"}} className="alert">
               <span  className="closebtn"></span>
               User Added Sucessfully
             </div> }
             {strartTyping? filterUsers.map(user=>  <AddContacts checkWhenAdd={clickedToAdd} isAfriend={isAfriend} username={logedinUser} userToAdd={user.username} profileImg={user.profilePic} />):
             contacts.map(ele=> <Contacts profilepic={ele.profilePic}  contact={ele.username} whenClicked={handleClick} logedinUser={logedinUser}/>)}
-
+        </div>
                 
         </div>
         <div className="card-footer"></div>

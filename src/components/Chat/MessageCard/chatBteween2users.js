@@ -17,7 +17,7 @@ var ran = "123456qwertzuiopasdfghjklyxcvbnm7890"
      
 
 export default function ChatBtween2Users(props) {
-  const {data, laoding} = useFetch("http://localhost:5000/getChat/user1/user3")
+  
   const username = useParams()
   const [user1Message , setUser1Message] = useState("")
   const [user2Message , setUser2Message] = useState("")
@@ -29,18 +29,34 @@ export default function ChatBtween2Users(props) {
   const classesForOther = ["justify-content-start", "msg_cotainer", 'deleteContainer', "action_menu_delete_otherUser", "msg_time", 'arrow-down']
   
   const logedinUser = props.logedinUser
-  useEffect(()=>{
+  const {data, laoding} = useFetch(`/getChat/${props.logedinUser}/${props.userClickedOn}`)
 
-     axios.get(`/getChat/${props.logedinUser}/${props.userClickedOn}`).then(resp => {
-        setChat(resp.data);
-    });
+  async function getChat(){
+    try {
+       await axios.get(`/getChat/${props.logedinUser}/${props.userClickedOn}`).then(resp => {
+                setChat(resp.data);
+            });
+    } catch (error) {
+      console.log(error);
+    }
+  }  
 
-    fetch(`/messagesCount/${props.logedinUser}/${props.userClickedOn}`).then(res => {
-      if(res.ok){
-        return res.json()
-      }
-    }).then(jsonRes => setMessagesCount(jsonRes))
- });
+  async function fetchMessageCount(){
+    try {
+      const res = await axios.get(`/messagesCount/${props.logedinUser}/${props.userClickedOn}`)
+      setMessagesCount(res.data)
+    } catch (error) {
+      console.log(error);
+    }
+   }
+
+//   useEffect(()=>{
+    
+//     // getChat() 
+//     fetchMessageCount()
+//  });
+ 
+
  
    const saveInput = (event)=>{
      const name = event.target.name
@@ -56,8 +72,9 @@ export default function ChatBtween2Users(props) {
           let y = Math.floor(Math.random() * 38);
           ran3.push(ran2[y])
       } 
-      console.log(ran3.join(""));
+    
       setMsgId(ran3.join(""))
+
       axios.post("/addMessage",
       {
         id: ran3.join(""),

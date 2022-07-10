@@ -14,8 +14,8 @@ export default function Contacts(props) {
   return (
     
     
-    <div className='switch_div' onClick={handleClick}>
-    <ui className="contacts"/>
+    <>
+    <ui className="contacts" onClick={handleClick}>
             <li className="active">
                 <div className="d-flex bd-highlight">
                     <div className="img_cont">
@@ -30,8 +30,8 @@ export default function Contacts(props) {
                 </div>
                 
             </li>
-            
-            </div>
+      </ui>     
+            </>
  
      
     

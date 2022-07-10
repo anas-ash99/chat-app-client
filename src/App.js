@@ -5,7 +5,7 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import SignUp from "./components/SignUp";
 import ChatfterLogin from "./components/Chat/ChatfterLogin";
-import Chat from "./components/Chat";
+import Chat from "./components/Chat/Chat";
 import Profile from "./components/Profile";
 import { UsersProvider } from "./UsersContext";
 
