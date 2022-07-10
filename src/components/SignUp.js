@@ -10,9 +10,9 @@ export default function SignUp(props) {
   const [alertForPsw, setAlertForPsw] = useState(false)
   const [style, setStyle] = useState("")
   const [user, setUser] = useState({
-    email: "user@email.com",
-    username:"user",
-    password:"123456"
+    email: "",
+    username:"",
+    password:""
    })
   const [confPassword, setConfPassword] = useState("")
   let navigate = useNavigate()
