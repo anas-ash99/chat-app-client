@@ -8,7 +8,9 @@ import ChatfterLogin from "./components/Chat/ChatfterLogin";
 import Chat from "./components/Chat/Chat";
 import Profile from "./components/Profile";
 import { UsersProvider } from "./UsersContext";
+// import io from "socket.io-client"
 
+// const socket = io.connect("http://localhost:5000/")
 function App() {
   
   return (

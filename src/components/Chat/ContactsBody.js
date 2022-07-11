@@ -108,7 +108,7 @@ export default function ContactsBody(props) {
                   </div>
               </div>
           </div>
-          <div class="card-body contacts_body">
+          <div className="card-body contacts_body">
           {clickedForAdd && <div onclick={closeAlert} style={{backgroundColor: "green"}} className="alert">
               <span  className="closebtn"></span>
               User Added Sucessfully

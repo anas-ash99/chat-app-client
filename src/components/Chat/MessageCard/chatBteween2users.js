@@ -8,6 +8,7 @@ import MessageMainUser from './MessageMainUser'
 import MessageBottom from './MessageBottom'
 import { axiosInstance } from '../../../config'
 import useFetch from '../../../UseFetch'
+import { Socket } from 'socket.io-client'
 
 
 var ran = "123456qwertzuiopasdfghjklyxcvbnm7890"
@@ -55,7 +56,7 @@ export default function ChatBtween2Users(props) {
    useEffect(()=>{
     getChat()
      fetchMessageCount()
- }, [props.userClickedOn, inputValue, ])
+ }, [props.userClickedOn])
 
  
    const saveInput = (event)=>{
@@ -65,16 +66,28 @@ export default function ChatBtween2Users(props) {
       setInputValue(value)
    }
   
-  const handleClick = ()=>{
-    if(clickedToSendMsg === true){
-      setClickedtoSendmsg(false)
-    }else{
-      setClickedtoSendmsg(true)
-    }
-    getChat()
-   console.log(clickedToSendMsg);
+  const handleClick = async ()=>{
+    // if(clickedToSendMsg === true){
+    //   setClickedtoSendmsg(false)
+    // }else{
+    //   setClickedtoSendmsg(true)
+    // }
+    // getChat()
+  
+
     var today = new Date()
     var time = today.getHours() + ":" + today.getMinutes() 
+    const messageData = {
+      chatId: props.chatId,
+      username: logedinUser,
+      content: user1Message,
+      time : time
+    }
+    
+    await props.socket.emit("send_message", messageData)
+     setChat((prev)=>[...prev, messageData])
+
+    setInputValue("")
     for( i = 0; i < 10; i++){
           let y = Math.floor(Math.random() * 38);
           ran3.push(ran2[y])
@@ -98,8 +111,15 @@ export default function ChatBtween2Users(props) {
     
   }
 
+
+  useEffect(()=>{
+     props.socket.on("receive_message", (data1)=>{
+         setChat((prev)=>[...prev, data1])
+     })
+  }, [props.socket])
+
   const deleteMessage = (messageId)=>{
-    getChat()
+    // getChat()
     fetchMessageCount()
     axiosInstance.delete(`/deleteMessage/${props.logedinUser}/${props.userClickedOn}/${messageId}`)
   }
@@ -108,17 +128,22 @@ export default function ChatBtween2Users(props) {
     e.preventDefault();
   }
 
+
+
+
   function messagesSturcture(){
     return(
        chat.map((ele, index)=>{
         if(ele.username === logedinUser){
           return(
-              <Message key={ele.msgId} id={ele.msgId} profilePic={props.mainPic} test={"main"} classes={classesForMain}
-               time={ele.time} content={ele.content} handleDelete={deleteMessage} name ={logedinUser} user2={props.userClickedOn} clickToSendMsg={clickedToSendMsg} />
+              <Message key={index} profilePic={""} test={"main"} classes={classesForMain}
+               time={ele.time} content={ele.content} handleDelete={deleteMessage} 
+               name ={ele.username} user2={props.userClickedOn}
+                clickToSendMsg={clickedToSendMsg} />
                 )
         }else{
           return(
-              <Message key={ele.msgId} id={ele.msgId} profilePic={props.user2Pic} test={"other"} classes={classesForOther} 
+              <Message key={index} profilePic={""} test={"other"} classes={classesForOther} 
               time={ele.time} content={ele.content} handleDelete={deleteMessage} name ={props.userClickedOn} user2={logedinUser} clickToSendMsg={clickedToSendMsg}/>
           )
         }
@@ -150,3 +175,22 @@ export default function ChatBtween2Users(props) {
 }
 
 
+// function messagesSturcture(){
+//     return(
+//        chat.map((ele, index)=>{
+//         if(ele.username === logedinUser){
+//           return(
+//               <Message key={ele.msgId} id={ele.msgId} profilePic={props.mainPic} test={"main"} classes={classesForMain}
+//                time={ele.time} content={ele.content} handleDelete={deleteMessage} name ={logedinUser} user2={props.userClickedOn} clickToSendMsg={clickedToSendMsg} />
+//                 )
+//         }else{
+//           return(
+//               <Message key={ele.msgId} id={ele.msgId} profilePic={props.user2Pic} test={"other"} classes={classesForOther} 
+//               time={ele.time} content={ele.content} handleDelete={deleteMessage} name ={props.userClickedOn} user2={logedinUser} clickToSendMsg={clickedToSendMsg}/>
+//           )
+//         }
+        
+//       })
+//     )
+      
+//     }

@@ -7,7 +7,10 @@ import ChatBtween2Users from './MessageCard/chatBteween2users'
 import { UsersContext } from '../../UsersContext'
 import Profile from '../Profile'
 import { useNavigate } from 'react-router-dom'
+import io from "socket.io-client"
 
+// const socket = io.connect("http://localhost:5000/")
+const socket = io.connect("https://api-chat-app123.herokuapp.com/")
 
 export default function ChatfterLogin() {
   let navigate = useNavigate()
@@ -18,7 +21,7 @@ export default function ChatfterLogin() {
   const [contactName, setContactName] = useState("")
   const [clickedOnProfile, setClickedOnProfile] = useState(false)
   const [usernames, setUsernames] = useState([])
-  const [test, setTest] = useState("")
+  const [chatId, setChatId] = useState("")
   var [userInfo, setUserInfo] = useState({
     username: "",
     email: "",
@@ -42,8 +45,11 @@ export default function ChatfterLogin() {
   })
 
   const handleClick = (contactName)=>{
+    const chatId = logedinUser.split("").concat(contactName.split("")).sort().join("")
+    setChatId(chatId)
+    socket.emit("join_room", chatId)
     navigate(`/chat/${logedinUser}/${contactName}`)
-     setClickedOnUser(true)
+    //  setClickedOnUser(true)
      setContactName(contactName)
   }
   
@@ -80,7 +86,7 @@ export default function ChatfterLogin() {
         {clickedOnProfile? <Profile img={picUrl} goBackChat={goBack} userInfo={userInfo}/>:
           <div className="row justify-content-center h-100"> <ContactsBody allUsers={allUsers} users={users} logedinUser={logedinUser} ifClicked={handleClick} />
             <div className="col-md-8 col-sm-8 col-xl-6 chat">
-              <ChatBtween2Users clickedOnUser={clickedOnUser} mainPic={picUrl} user2Pic={user2Pic} userClickedOn={otherUser}  logedinUser={logedinUser}/>
+              <ChatBtween2Users socket={socket} chatId={chatId}  clickedOnUser={clickedOnUser} mainPic={picUrl} user2Pic={user2Pic} userClickedOn={otherUser}  logedinUser={logedinUser}/>
             </div>
         </div>}
 
