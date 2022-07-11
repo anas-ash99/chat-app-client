@@ -9,7 +9,8 @@ import Profile from '../Profile'
 import { useNavigate } from 'react-router-dom'
 import io from "socket.io-client"
 
-const socket = io.connect("https://api-chat-app123.herokuapp.com/")
+// const socket = io.connect("https://api-chat-app123.herokuapp.com")
+const socket = io.connect("http://localhost:5000")
 
 export default function ChatfterLogin() {
   let navigate = useNavigate()
