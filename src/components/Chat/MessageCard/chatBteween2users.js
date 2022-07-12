@@ -55,7 +55,7 @@ export default function ChatBtween2Users(props) {
 
    useEffect(()=>{
     getChat()
-     fetchMessageCount()
+    //  fetchMessageCount()
  }, [props.userClickedOn])
 
  
